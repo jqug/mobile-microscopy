@@ -1,11 +1,12 @@
 # mobile-microscopy
 Automated laboratory diagnosis for mobile devices
 
-To run this code, first compile the morphological feature extraction library by running build.sh
+**To run this code:**
 
-The script classificationtest.py then carries out object detection and classification.
+./build.sh
+python evaluatedetection.py
 
-Reference:
+**Reference:**
 
 J.A. Quinn, A. Andama, I. Munabi, F.N. Kiwanuka. Automated Blood Smear Analysis
 for Mobile Malaria Diagnosis. Chapter in Mobile Point-of-Care 
