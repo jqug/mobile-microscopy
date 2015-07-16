@@ -973,6 +973,21 @@ double LevelAttribute(void *levelattr)
 
 /****** Image create/read/write functions ******************************/
 
+ImageGray *ImageGrayFromImage( unsigned char *pixmap, ulong width, ulong height)
+{
+   ImageGray *img;
+
+   img = malloc(sizeof(ImageGray));
+   if (img==NULL)  return(NULL);
+   img->Width = width;
+   img->Height = height;
+   img->Pixmap = pixmap;
+
+   return(img);
+} /* ImageGrayFromImage */
+
+
+
 ImageGray *ImageGrayCreate(ulong width, ulong height)
 {
    ImageGray *img;
@@ -991,10 +1006,15 @@ ImageGray *ImageGrayCreate(ulong width, ulong height)
 } /* ImageGrayCreate */
 
 
+void ImageGrayRelease(ImageGray *img)
+{
+    img->Pixmap = NULL;
+} /* ImageGrayRelease */
 
 void ImageGrayDelete(ImageGray *img)
 {
-   free(img->Pixmap);
+   if(img->Pixmap)
+	free(img->Pixmap);
    free(img);
 } /* ImageGrayDelete */
 
@@ -1368,9 +1388,7 @@ float* MaxTreeAttributes(int height, int width, unsigned char* pixmap, int attri
 {
    // Calculate max tree
    ImageGray *img, *template;
-   img = ImageGrayCreate((ulong) width, (ulong) height);
-   ImageGrayInit(img, NUMLEVELS-1);
-   img-> Pixmap = pixmap;
+   img = ImageGrayFromImage(pixmap, (ulong) width, (ulong) height);
    template = ImageGrayCreate((ulong) width, (ulong) height);
    if (template)  ImageGrayInit(template, NUMLEVELS-1);
    MaxTree *mt;
@@ -1378,8 +1396,11 @@ float* MaxTreeAttributes(int height, int width, unsigned char* pixmap, int attri
 
    // Get the attribute values
    float* attributesArray = GetAttributes(mt, img, Attribs[attrib].Attribute, count);
+
    MaxTreeDelete(mt);
    ImageGrayDelete(template);
+   ImageGrayRelease(img);
+   ImageGrayDelete(img);
    return &(attributesArray[0]);
 }
 
