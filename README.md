@@ -19,4 +19,5 @@ http://cit.mak.ac.ug/staff/jquinn/papers/AutomatedMalariaDiagnosisChapter.pdf
 **Data:**
 
 2703 blood smear images with bounding boxes of 50,255 malaria parasites.
+
 http://air.ug/downloads/plasmodium-images.zip
