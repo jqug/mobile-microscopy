@@ -129,7 +129,7 @@ def _extract_moment_features(imgray):
             thresh = thresholds[i]
             binarypatch = cv2.threshold(imgray, thresh, 255,
                                         cv2.THRESH_BINARY_INV)[1]
-            contours, hierarchy = cv2.findContours(binarypatch,
+            imcontour, contours, hierarchy = cv2.findContours(binarypatch,
                                                    cv2.RETR_EXTERNAL,
                                                    cv2.CHAIN_APPROX_SIMPLE)
 
